@@ -1,20 +1,22 @@
 pipeline {
     agent any
-
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Building the app'
+    environment {
+        IMAGE_NAME = "dawrinmiller/django_project"
+    }
+    stages{
+        stage('Checkout'){
+            steps{
+                git branch 'main', url: 'https://github.com/dawrinmiller/django_project'
             }
         }
-        stage('Test') {
-            steps {
-                echo 'Running tests'
+        stage('Build Docker image'){
+            steps{
+                bat "docker build -t %IMAGE_NAME%:latest ."
             }
         }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying the app'
+        stage('Push to Dockerhub'){
+            steps{
+                withCredentials([usernamePassword])
             }
         }
     }

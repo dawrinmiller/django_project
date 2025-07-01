@@ -6,7 +6,7 @@ pipeline {
     stages{
         stage('Checkout'){
             steps{
-                git branch 'main', url: 'https://github.com/dawrinmiller/django_project'
+                git branch: 'main', url: 'https://github.com/dawrinmiller/django_project'
             }
         }
         stage('Build Docker image'){
